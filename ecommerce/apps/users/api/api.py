@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from apps.users.models import User
-from apps.users.api.serializers import UserSerializer
+from apps.users.api.serializers import UserSerializer, TestUserSerializer
 
 
 @api_view(['GET', 'POST']) # The api_view decorator takes a list of HTTP methods that your view should respond to. 
@@ -11,6 +11,13 @@ def user_api_view(request):
     if request.method == 'GET':
         users = User.objects.all()
         user_serializer = UserSerializer(users, many=True)
+        test_data = {
+            'name': 'develop',
+            'email': 'dev@gmail.com'
+        }
+        test_user = TestUserSerializer(data = test_data)
+        if test_user.is_valid():
+            print('Pasó validaciones')
         return Response(user_serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'POST': # Al agregar POST me modifica la interfaz para poder agregar un body

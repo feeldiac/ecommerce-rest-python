@@ -39,3 +39,9 @@ class TestUserSerializer(serializers.Serializer):
         #     raise serializers.ValidationError(
         #         'El email no puede contenr el nombre')
         return data
+
+    def create(self, validated_data):
+        # validated_data (dicc) es toda la data validada (el data de validate)
+        # Create debe retornar la instancia de un objeto. Como argumento se le pasa **validated data, se le asignan los valores no las llaves.
+        # Se registra en la bd y se retorna la instancia
+        return User.objects.create(**validated_data)

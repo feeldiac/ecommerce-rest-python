@@ -16,12 +16,14 @@ def user_api_view(request):
 
         test_data = {
             'name': 'dev',
-            'email': 'developer@gmail.com'
+            'email': 'test@gmail.com'
         }
 
         test_user = TestUserSerializer(data=test_data, context=test_data)
         if test_user.is_valid():
-            print('Pasó validaciones')
+            user_instance = test_user.save()  # Se crea una instancia y se imprime
+            print(user_instance)
+            # print('Pasó validaciones')
         else:
             print(test_user.errors)
         return Response(user_serializer.data, status=status.HTTP_200_OK)
